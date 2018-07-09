@@ -94,7 +94,12 @@ method make_game($dbh, $q, $username) {
         if ($player_count < 2 or $player_count > 5) {
             error "Invalid player count $player_count";
         }
-        @players = ($username);
+        $creator_joins = $q->param('include_creator');
+        if ($creator_joins) {
+            @players = ($username);
+         } else {
+            @players = ();
+         }
     } else {
         error "Invalid game type '$game_type'";
     }
